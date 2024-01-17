@@ -1,4 +1,5 @@
 import {Layout, Menu, MenuProps, theme} from "antd";
+import {Outlet} from "react-router-dom";
 const {Content, Footer, Header, Sider} = Layout;
 
 const items: MenuProps["items"] = [
@@ -45,17 +46,16 @@ const MainLayout = () => {
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
         }}>
-        <div className="demo-logo-vertical">
-          <h3
-            style={{
-              color: "white",
-              textAlign: "center",
-              height: "4rem",
-              marginTop: "1rem",
-              borderBottom: "1px solid white",
-            }}>
-            PH University Management System
-          </h3>
+        <div
+          style={{
+            color: "white",
+            height: "5rem",
+            textAlign: "center",
+            display: "grid",
+            placeContent: "center",
+            borderBottom: "1px solid gray",
+          }}>
+          <h3>PH University Management System</h3>
         </div>
         <Menu
           theme="dark"
@@ -75,7 +75,7 @@ const MainLayout = () => {
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}>
-            <h1>The Main content should go here</h1>
+            <Outlet />
           </div>
         </Content>
         <Footer style={{textAlign: "center"}}>
