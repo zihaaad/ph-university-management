@@ -3,39 +3,71 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateAdmin from "../pages/admin/CreateAdmin";
 import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
+import {NavLink} from "react-router-dom";
 
 type TRoute = {
   path: string;
   element: ReactNode;
 };
 
+type TSidebarItem = {
+  key: string;
+  label: ReactNode;
+  children?: TSidebarItem[];
+};
+
 const adminPaths = [
   {
-    name: "dashboard",
+    name: "Dashboard",
     path: "dashboard",
     element: <AdminDashboard />,
   },
   {
-    name: "user-management",
+    name: "User Management",
     children: [
       {
-        name: "create-admin",
+        name: "Create Admin",
         path: "create-admin",
         element: <CreateAdmin />,
       },
       {
-        name: "create-faculty",
+        name: "Create Faculty",
         path: "create-faculty",
         element: <CreateFaculty />,
       },
       {
-        name: "create-student",
+        name: "Create Student",
         path: "create-student",
         element: <CreateStudent />,
       },
     ],
   },
 ];
+
+export const adminSidebarItems = adminPaths.reduce(
+  (acc: TSidebarItem[], item) => {
+    if (item.path && item.name) {
+      acc.push({
+        key: item.name,
+        label: <NavLink to={`admin/${item.path}`}>{item.name}</NavLink>,
+      });
+    }
+
+    if (item.children) {
+      acc.push({
+        key: item.name,
+        label: item.name,
+        children: item.children.map((child) => ({
+          key: child.name,
+          label: <NavLink to={`${child.path}`}>{child.name}</NavLink>,
+        })),
+      });
+    }
+
+    return acc;
+  },
+  []
+);
 
 export const adminRoutes = adminPaths.reduce((acc: TRoute[], item) => {
   if (item.path && item.element) {
@@ -56,28 +88,3 @@ export const adminRoutes = adminPaths.reduce((acc: TRoute[], item) => {
 
   return acc;
 }, []);
-
-console.log(adminRoutes);
-
-// export const adminRoutes = [
-//   {
-//     index: true,
-//     element: <AdminDashboard />,
-//   },
-//   {
-//     path: "dashboard",
-//     element: <AdminDashboard />,
-//   },
-//   {
-//     path: "create-student",
-//     element: <CreateStudent />,
-//   },
-//   {
-//     path: "create-faculty",
-//     element: <CreateFaculty />,
-//   },
-//   {
-//     path: "create-admin",
-//     element: <CreateAdmin />,
-//   },
-// ];
