@@ -1,32 +1,7 @@
 import {Layout, Menu, theme} from "antd";
 import {Outlet} from "react-router-dom";
 import {adminSidebarItems} from "../../routes/admin.routes";
-const {Content, Footer, Header, Sider} = Layout;
-
-// const items: MenuProps["items"] = [
-//   {
-//     key: "dashboard",
-//     label: <NavLink to={"/admin/dashboard"}>Dashboard</NavLink>,
-//   },
-//   {
-//     key: "user-management",
-//     label: "User Management",
-//     children: [
-//       {
-//         key: "create-admin",
-//         label: <NavLink to={"/admin/create-admin"}>Create Admin</NavLink>,
-//       },
-//       {
-//         key: "create-faculty",
-//         label: <NavLink to={"/admin/create-faculty"}>Create Faculty</NavLink>,
-//       },
-//       {
-//         key: "create-student",
-//         label: <NavLink to={"/admin/create-student"}>Create Student</NavLink>,
-//       },
-//     ],
-//   },
-// ];
+const {Content, Header, Sider} = Layout;
 
 const MainLayout = () => {
   const {
@@ -75,9 +50,6 @@ const MainLayout = () => {
             <Outlet />
           </div>
         </Content>
-        <Footer style={{textAlign: "center"}}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
