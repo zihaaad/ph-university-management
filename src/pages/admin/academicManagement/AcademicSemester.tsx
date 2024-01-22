@@ -7,7 +7,7 @@ const AcademicSemester = () => {
   const {data} = useGetAllSemestersQuery(token);
 
   console.log(data);
-  return <div></div>;
+  return <div>Academic Semester: {data?.data?.length}</div>;
 };
 
 export default AcademicSemester;
