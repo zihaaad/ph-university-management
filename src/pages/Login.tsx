@@ -1,4 +1,4 @@
-import {Button} from "antd";
+import {Button, Row} from "antd";
 import {useLoginMutation} from "../redux/features/auth/authApi";
 import {useAppDispatch} from "../redux/hooks";
 import {TUser, setUser} from "../redux/features/auth/authSlice";
@@ -11,12 +11,11 @@ import PHInput from "../components/form/PHInput";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const {register, handleSubmit} = useForm({
-  //   defaultValues: {
-  //     id: "A-0001",
-  //     password: "admin123",
-  //   },
-  // });
+
+  const defaultValues = {
+    id: "A-0001",
+    password: "admin123",
+  };
 
   const [login] = useLoginMutation();
 
@@ -38,17 +37,15 @@ const Login = () => {
     }
   };
   return (
-    <PHForm onSubmit={onSubmit}>
-      <div>
-        <PHInput type={"text"} name={"id"} label={"ID:"} />
-      </div>
-      <div>
-        <PHInput type={"password"} name={"password"} label={"Password:"} />
-      </div>{" "}
-      <Button htmlType="submit" style={{marginTop: "5px"}}>
-        Login
-      </Button>
-    </PHForm>
+    <Row justify="center" align="middle" style={{height: "100vh"}}>
+      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
+        <PHInput type="text" name="id" label="ID:" />
+        <PHInput type="password" name="password" label="Password:" />
+        <Button htmlType="submit" style={{marginTop: "5px"}}>
+          Login
+        </Button>
+      </PHForm>
+    </Row>
   );
 };
 
