@@ -4,6 +4,8 @@ import {FieldValues, SubmitHandler} from "react-hook-form";
 import PHSelect from "../../../components/form/PHSelect";
 import {nameOptions} from "../../../constants/semester";
 import {monthOptions} from "../../../constants/global";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {academicSemesterSchema} from "../../../schemas/academicManagement.schema";
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 4].map((number) => ({
@@ -28,7 +30,9 @@ const CreateAcademicSemester = () => {
   return (
     <Flex justify="center" align="center">
       <Col span={8}>
-        <PHForm onSubmit={onSubmit}>
+        <PHForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(academicSemesterSchema)}>
           <PHSelect label="Name" name="name" options={nameOptions} />
           <PHSelect label="Year" name="year" options={yearOptions} />
           <PHSelect
