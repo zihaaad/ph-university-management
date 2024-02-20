@@ -8,7 +8,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {academicSemesterSchema} from "../../../schemas/academicManagement.schema";
 import {useAddAcademicSemesterMutation} from "../../../redux/features/admin/academicManagement.api";
 import {toast} from "sonner";
-import {TResponse} from "../../../types/global";
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3].map((number) => ({
@@ -19,7 +18,7 @@ const yearOptions = [0, 1, 2, 3].map((number) => ({
 const CreateAcademicSemester = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const toastId = toast.loading("Creating Academic Semster...");
+    const toastId = toast.loading("Creating Data ¯_(ツ)_/¯ ");
     const name = nameOptions[Number(data?.name) - 1]?.label;
 
     const semesterData = {
@@ -31,14 +30,14 @@ const CreateAcademicSemester = () => {
     };
 
     try {
-      const res = (await addAcademicSemester(semesterData)) as TResponse;
-      if (res.error) {
-        toast.error(res.error?.data.message, {id: toastId});
-      } else if (res.data.success) {
-        toast.success("Academic Semester Created Successfully", {id: toastId});
+      const res = await addAcademicSemester(semesterData).unwrap();
+      if (res.success) {
+        toast.success(res.message, {id: toastId, duration: 2000});
+      } else {
+        toast.error(res.data.message, {id: toastId});
       }
-    } catch (error) {
-      toast.error("something went wrong", {id: toastId});
+    } catch (error: any) {
+      toast.error(error.data.message, {id: toastId, duration: 2000});
     }
   };
 
