@@ -12,7 +12,7 @@ const MainLayout = () => {
   } = theme.useToken();
 
   return (
-    <Layout style={{height: "100vh"}}>
+    <Layout>
       <Sidebar />
       <Layout>
         <Header
@@ -31,8 +31,6 @@ const MainLayout = () => {
           <div
             style={{
               padding: 24,
-              minHeight: 360,
-              height: "100%",
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}>
