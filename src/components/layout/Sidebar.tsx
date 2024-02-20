@@ -31,16 +31,7 @@ const Sidebar = () => {
   }
 
   return (
-    <Sider
-      breakpoint="lg"
-      width={222}
-      collapsedWidth="0"
-      onBreakpoint={(broken) => {
-        console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        console.log(collapsed, type);
-      }}>
+    <Sider breakpoint="lg" width={222} collapsedWidth="0">
       <div
         style={{
           color: "white",
