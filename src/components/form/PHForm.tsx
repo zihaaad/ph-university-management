@@ -1,11 +1,6 @@
 import {Form} from "antd";
 import {ReactNode} from "react";
-import {
-  FieldValues,
-  FormProvider,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import {FieldValues, FormProvider, useForm} from "react-hook-form";
 
 type TFormConfig = {
   defaultValues?: Record<string, any>;
@@ -13,7 +8,7 @@ type TFormConfig = {
 };
 
 type TFormProps = {
-  onSubmit: SubmitHandler<FieldValues>;
+  onSubmit: FieldValues | any;
   children: ReactNode;
 } & TFormConfig;
 
