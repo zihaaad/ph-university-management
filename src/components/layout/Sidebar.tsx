@@ -33,6 +33,7 @@ const Sidebar = () => {
   return (
     <Sider
       breakpoint="lg"
+      width={222}
       collapsedWidth="0"
       onBreakpoint={(broken) => {
         console.log(broken);
@@ -48,6 +49,7 @@ const Sidebar = () => {
           display: "grid",
           placeContent: "center",
           borderBottom: "1px solid gray",
+          margin: "0px 5px",
         }}>
         <h3>PH University Management System</h3>
       </div>
