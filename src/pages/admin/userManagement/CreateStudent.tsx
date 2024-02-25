@@ -11,6 +11,7 @@ import {
 } from "../../../redux/features/admin/academicManagement.api";
 import {useAddStudentMutation} from "../../../redux/features/admin/userManagement.api";
 import {IAcademicDepartment} from "../../../types/academicManagement.type";
+import {toast} from "sonner";
 
 // const studentDummyData = {
 //   password: "student123",
@@ -48,11 +49,11 @@ import {IAcademicDepartment} from "../../../types/academicManagement.type";
 
 const studentDefaultValues = {
   name: {
-    firstName: "Umar",
-    lastName: "Ahmed",
+    firstName: "Student",
+    lastName: "8",
   },
   gender: "male",
-  email: "umar@ahmed.com",
+  email: "s8@ahmed.com",
   contactNo: "1234567890",
   emergencyContactNo: "9876543210",
   bloodGroup: "A+",
@@ -111,7 +112,11 @@ const CreateStudent = () => {
     formData.append("data", JSON.stringify(studentData));
     formData.append("file", data?.image);
 
-    addStudent(formData);
+    const res = await addStudent(formData).unwrap();
+    if (res.success) {
+      console.log(res);
+      toast.success(res.message);
+    }
   };
   return (
     <Row>

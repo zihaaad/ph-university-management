@@ -1,4 +1,4 @@
-import {Button, Space, Table} from "antd";
+import {Button, Pagination, Space, Table} from "antd";
 import type {TableColumnsType, TableProps} from "antd";
 import {useState} from "react";
 import {TQueryParams, TStudent} from "../../../types";
@@ -10,8 +10,14 @@ type TTableData = Pick<
 >;
 
 const StudentData = () => {
-  const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
-  const {data: students, isFetching} = useGetAllStudentsQuery(params);
+  const [params, setParams] = useState<TQueryParams[]>([]);
+  const [page, setPage] = useState(Number);
+  const {data: students, isFetching} = useGetAllStudentsQuery([
+    {name: "limit", value: 5},
+    {name: "page", value: page},
+    {name: "sort", value: "id"},
+    ...params,
+  ]);
 
   const tableData: any = students?.data?.map(
     ({_id, id, fullName, academicDepartment, email}) => ({
@@ -80,14 +86,22 @@ const StudentData = () => {
   };
 
   return (
-    <div>
+    <>
       <Table
         loading={isFetching}
         columns={columns}
         dataSource={tableData}
         onChange={onChange}
+        pagination={false}
       />
-    </div>
+      <div style={{marginTop: "1rem"}}>
+        <Pagination
+          onChange={(value) => setPage(value)}
+          pageSize={students?.meta?.limit}
+          total={students?.meta?.total}
+        />
+      </div>
+    </>
   );
 };
 
