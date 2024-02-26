@@ -1,8 +1,13 @@
 import {Button, Dropdown, Table, Tag} from "antd";
 import type {TableColumnsType} from "antd";
-import {useGetAllSemesterRegistrationsQuery} from "../../../redux/features/admin/courseManagement.api";
+import {
+  useGetAllSemesterRegistrationsQuery,
+  useUpdateSemesterRegistrationMutation,
+} from "../../../redux/features/admin/courseManagement.api";
 import moment from "moment";
 import {TSemester} from "../../../types";
+import {useState} from "react";
+import {toast} from "sonner";
 
 export type TTableData = Pick<TSemester, "startDate" | "endDate" | "status">;
 
@@ -22,6 +27,8 @@ const items = [
 ];
 
 const RegisteredSemesters = () => {
+  const [semesterId, setSemesterId] = useState("");
+  const [updateSemesterStatus] = useUpdateSemesterRegistrationMutation();
   const {
     data: registeredSemesters,
     isLoading,
@@ -33,18 +40,35 @@ const RegisteredSemesters = () => {
       key: _id,
       name: `${academicSemester.name} ${academicSemester.year}`,
       status,
-      startDate: moment(startDate).format("MMMM Do YYYY, h:mm:ss a"),
-      endDate: moment(endDate).format("MMMM Do YYYY, h:mm:ss a"),
+      startDate: moment(startDate).format("MMMM Do YYYY, h A"),
+      endDate: moment(endDate).format("MMMM Do YYYY, h A"),
     })
   );
 
-  const handleStatusDropdown = (data) => {
-    console.log(data);
+  const handleStatusChange = async (data: {key: string}) => {
+    const toastId = toast.loading("Updating Status ¯_(ツ)_/¯ ");
+    const updatedData = {
+      id: semesterId,
+      data: {
+        status: data.key,
+      },
+    };
+
+    try {
+      const res = await updateSemesterStatus(updatedData).unwrap();
+      if (res.success) {
+        toast.success(res.message, {id: toastId, duration: 2000});
+      } else {
+        toast.error(res.data.message, {id: toastId});
+      }
+    } catch (error: any) {
+      toast.error(error.data.message, {id: toastId, duration: 2000});
+    }
   };
 
   const menuProps = {
     items,
-    onClick: handleStatusDropdown,
+    onClick: handleStatusChange,
   };
 
   const columns: TableColumnsType<TTableData> = [
@@ -84,10 +108,12 @@ const RegisteredSemesters = () => {
     {
       title: "Action",
       key: "x",
-      render: () => {
+      render: (item) => {
         return (
-          <Dropdown menu={menuProps}>
-            <Button>Update</Button>
+          <Dropdown trigger={["click"]} menu={menuProps}>
+            <Button onClick={() => setSemesterId(item.key)}>
+              Change Status
+            </Button>
           </Dropdown>
         );
       },

@@ -8,8 +8,10 @@ import {useGetAllSemestersQuery} from "../../../redux/features/admin/academicMan
 import PHDatePicker from "../../../components/form/PHDatePicker";
 import PHInput from "../../../components/form/PHInput";
 import {useAddSemesterRegistrationMutation} from "../../../redux/features/admin/courseManagement.api";
+import {useNavigate} from "react-router-dom";
 
 const SemesterRegistration = () => {
+  const navigate = useNavigate();
   const {data: academicSemester} = useGetAllSemestersQuery([
     {name: "sort", value: "year"},
   ]);
@@ -33,6 +35,7 @@ const SemesterRegistration = () => {
       const res = await addSemesterRegistration(semesterData).unwrap();
       if (res.success) {
         toast.success(res.message, {id: toastId, duration: 2000});
+        navigate("/admin/registered-semester");
       } else {
         toast.error(res.data.message, {id: toastId});
       }
