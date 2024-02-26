@@ -11,3 +11,19 @@ export type TSemester = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TPreRequisiteCourse = {
+  course: TCourse;
+  isDeleted: boolean;
+  _id: string;
+};
+
+export type TCourse = {
+  _id: string;
+  title: string;
+  code: number;
+  prefix: string;
+  credits: number;
+  isDeleted: boolean;
+  preRequisiteCourses: TPreRequisiteCourse[];
+};
