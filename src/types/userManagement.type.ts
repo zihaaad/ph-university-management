@@ -1,5 +1,6 @@
 import {
   IAcademicDepartment,
+  TAcademicFaculty,
   TAcademicSemester,
 } from "./academicManagement.type";
 
@@ -50,3 +51,31 @@ export type TLocalGuardian = {
   address: string;
   _id: string;
 };
+
+export type TFaculty = {
+  _id: string;
+  id: string;
+  user: string;
+  designation: string;
+  name: Name;
+  gender: string;
+  dateOfBirth: string;
+  email: string;
+  contactNo: string;
+  emergencyContactNo: string;
+  bloogGroup: string;
+  presentAddress: string;
+  permanentAddress: string;
+  profileImg: string;
+  academicDepartment: IAcademicDepartment;
+  academicFaculty: TAcademicFaculty;
+  isDeleted: boolean;
+  __v: number;
+  fullName: string;
+};
+
+export interface Name {
+  firstName: string;
+  lastName: string;
+  _id: string;
+}

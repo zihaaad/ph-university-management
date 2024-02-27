@@ -58,6 +58,18 @@ const courseManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["courses"],
     }),
+    addFaculties: builder.mutation({
+      query: (args) => {
+        console.log(args);
+
+        return {
+          url: `/courses/${args.courseId}/assign-faculties`,
+          method: "PUT",
+          body: args.data,
+        };
+      },
+      invalidatesTags: ["courses"],
+    }),
   }),
 });
 
@@ -65,6 +77,7 @@ export const {
   useAddSemesterRegistrationMutation,
   useGetAllSemesterRegistrationsQuery,
   useUpdateSemesterRegistrationMutation,
+  useAddFacultiesMutation,
   useAddCourseMutation,
   useGetAllCoursesQuery,
 } = courseManagementApi;
