@@ -20,6 +20,8 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = async (data: {id: string; password: string}) => {
+    const toastId = toast.loading("Trying To Login");
+
     try {
       const userInfo = {
         id: data.id,
@@ -28,12 +30,20 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({user: user, token: res.data.accessToken}));
-      if (res.data.success) {
-        toast.success("Logged In Successfully");
+      if (res.success) {
+        if (res.data.needsPasswordChange) {
+          toast.success("Logged In Successfully", {id: toastId});
+          toast.info("Needs To Change Password");
+          navigate(`/change-password`);
+        } else {
+          toast.success("Logged In Successfully", {id: toastId});
+          navigate(`/${user.role}/dashboard`);
+        }
+      } else {
+        toast.error(res.data.message, {id: toastId});
       }
-      navigate(`/${user.role}/dashboard`);
     } catch (error) {
-      // console.log(error)
+      toast.error("something went wrong! try again", {id: toastId});
     }
   };
   return (
