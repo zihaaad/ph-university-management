@@ -12,8 +12,18 @@ const studetnCourseApi = baseApi.injectEndpoints({
       transformResponse: (res: TResponseRedux<TOfferedCourse[]>) => {
         return {data: res.data, meta: res.meta};
       },
+      providesTags: ["offeredCourse"],
+    }),
+    enrollCourse: builder.mutation({
+      query: (data) => ({
+        url: "/enrolled-courses/create-enrolled-course",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["offeredCourse"],
     }),
   }),
 });
 
-export const {useGetAllOfferedCoursesQuery} = studetnCourseApi;
+export const {useGetAllOfferedCoursesQuery, useEnrollCourseMutation} =
+  studetnCourseApi;
