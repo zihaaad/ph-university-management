@@ -56,5 +56,5 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: BaseQueryWithRefreshToken,
   endpoints: () => ({}),
-  tagTypes: ["semesters", "courses", "offeredCourse"],
+  tagTypes: ["semesters", "courses", "offeredCourse", "enrolledCourses"],
 });
