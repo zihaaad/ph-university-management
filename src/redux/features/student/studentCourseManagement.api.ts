@@ -22,8 +22,21 @@ const studetnCourseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["offeredCourse"],
     }),
+    getMyEnrolledCourses: builder.query({
+      query: () => ({
+        url: "/enrolled-courses/my-enrolled-courses",
+        method: "GET",
+      }),
+      transformResponse: (res: TResponseRedux<any>) => {
+        return {data: res.data, meta: res.meta};
+      },
+      providesTags: ["offeredCourse"],
+    }),
   }),
 });
 
-export const {useGetAllOfferedCoursesQuery, useEnrollCourseMutation} =
-  studetnCourseApi;
+export const {
+  useGetAllOfferedCoursesQuery,
+  useEnrollCourseMutation,
+  useGetMyEnrolledCoursesQuery,
+} = studetnCourseApi;
